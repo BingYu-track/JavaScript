@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>eval的用法</title>
+	</head>
+	<body>
+		<button onclick="test();">按钮</button>
+		<button onclick="test1();">按钮1</button>
+		<button onclick="test2(-1);">按钮2</button>
+	</body>
+</html>
+<script>
+	/*alert("开始测试");
+	var geval = eval;
+	var x = "global",y="global";
+	function f(){
+		var x = "local";
+		eval("x +='changed';");
+		return x;
+	}
+	function g(){
+		var y = "local";
+		eval("y +='changed';");
+		return y;
+	}
+	console.log(f(),x);
+	console.log(g(),y);*/
+</script>
+<script>
+	myTest: function add(){
+		alert("调用add函数");
+	}
+	console.log(myTest);
+</script>
+<script>
+	function test2(x){
+		if(x<0){
+			throw new Error("x不能是负数");
+			return;
+		}
+		alert("合法");
+	}
+</script>

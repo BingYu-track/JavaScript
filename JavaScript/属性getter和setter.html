@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>属性getter和setter</title>
+	</head>
+	<body>
+		<button onclick="test();">按钮</button>
+		<button onclick="test1();">按钮1</button>
+	</body>
+</html>
+<script>
+	function test(){
+		debugger;
+		var myself = {
+			name:"胡小伟",
+			get gender(){alert("调用了get方法");return "man";}
+		};//设置random对象的可以存取的r属性
+		console.log(myself);
+		console.log(myself.gender);//man  当访gender属性时调用gender的get方法
+		myself.gender="woman";//gender属性设置失败，因为gender属性只有get方法，gender属性只能读，不能写
+		console.log(myself.gender);//结果仍然是man
+	}
+	//总结,get和set可以用来设定一个对象的属性的"读、写特性"
+</script>
+<script>
+	function test1(){
+		debugger;
+		var myself = {
+			name:"胡小伟",
+			get gender(){
+				alert("调用了get方法");
+				if(this.sex){
+					return this.sex;//这里sex属性的作用是作为一个中间量
+				}else{
+					return "man";
+				}
+			},
+			set gender(sex){
+				alert("调用了set方法");
+				this.sex=sex;//将传过来的值设置到sex中
+			}//为gender属性设置set方法
+		};//设置random对象的可以存取的r属性
+		console.log(myself);
+		console.log(myself.gender);//man  当访gender属性时调用gender的get方法
+		myself.gender="woman";//调用了set方法,将woman设置到了sex属性中
+		console.log(myself.gender);//再次掉用get方法返回woman(事实上返回的是myself对象的sex属性的值)
+	}
+</script>

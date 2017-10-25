@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>属性的特性</title>
+	</head>
+	<body>
+		<button onclick="test();">按钮</button>
+		<button onclick="test1();">按钮1</button>
+	</body>
+</html>
+<script>
+	function test(){
+		var a = {x:1,y:2};
+		debugger;
+		//1.查看对象属性x的特性
+		console.log(Object.getOwnPropertyDescriptor(a,"x"));
+		//结果：{value: 1, writable: true, enumerable: true, configurable: true}
+		alert(Object.isExtensible(a));//true
+		
+		//2.将对象a变为封闭的(该对象属性的特性无法修改，已有属性无法删除；对象不可扩展)
+		Object.seal(a);
+		alert(delete a.x);// false 属性x删除失败
+		alert(Object.isExtensible(a));//false
+		
+		//3.再次查看对象属性x的特性，发现configurable变为false
+		console.log(Object.getOwnPropertyDescriptor(a,"x"));
+		//结果：{value: 1, writable: true, enumerable: true, configurable: false}属性均不可配置
+		
+		//4.尝试修改x属性的特性
+		Object.defineProperty(a,"x",{value:2,writable:false,enumerable:false,configurable:true});
+		//结果直接报错(其中"读，写"特性是可以修改的其它两个无法修改)
+		console.log(Object.getOwnPropertyDescriptor(a,"x"));
+		
+	}
+</script>
+<script>
+	function test1(){
+		var a = {x:1,y:2};
+		alert(Object.isExtensible(a));//true
+		debugger;
+		//1.查看对象属性x的特性(该对象属性的特性无法修改，已有属性无法删除；且属性设置为只读，不影响对象的可扩展性)
+		console.log(Object.getOwnPropertyDescriptor(a,"x"));
+		//结果：{value: 1, writable: true, enumerable: true, configurable: true}
+		
+		alert(Object.isExtensible(a));//true 可扩展
+		
+		//2.冻结对象a
+		Object.freeze(a);
+		console.log(Object.getOwnPropertyDescriptor(a,"x"));
+		//结果：{value: 1, writable: false, enumerable: true, configurable: false}
+	}
+</script>
