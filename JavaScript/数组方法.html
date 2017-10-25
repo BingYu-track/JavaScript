@@ -8,6 +8,8 @@
 		<button onclick="test();">forEach()按钮</button>
 		<button onclick="test1();">map()按钮</button>
 		<button onclick="test2();">filter()按钮</button>
+		<button onclick="test3();">every()按钮</button>
+		<button onclick="test4();">some()按钮</button>
 	</body>
 </html>
 <script>
@@ -30,7 +32,7 @@
 			console.log(c);//["a", "b", "c", "d"]
 			return 0;//会将返回值替换当前元素
 		});
-		console.log(arr);//[0, 0, 0, 0]
+		console.log(arr);// 返回数组[0, 0, 0, 0]
 	}
 </script>
 <script>
@@ -50,3 +52,23 @@
 		
 	}
 </script>
+<script>
+	function test3(){
+		var data = [5,6,7,8,9];
+		var arr = data.every(function(a,b,c){ //当所有元素都"数组元素"、"当前索引"、"数组"
+			//return a>5;  //arr为false
+			return a>4;//arr为true
+		});
+		console.log(arr);// false 只要一个元素不满足，就返回fasle,只有当所有元素都大于5才返回true
+	}
+</script>
+<script>
+	function test4(){
+		var data = [5,6,7,8,9];
+		var arr = data.some(function(a,b,c){
+			return a==9;  //只要数组元素中的其中一个参与该函数运算返回true时，some()方法返回true
+		});
+		console.log(arr);//true  只要数组元素中的其中一个等于9，就返回true
+	}
+</script>
+
