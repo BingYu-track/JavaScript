@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>JavaScript对象和数字之间的转换</title>
+	</head>
+	<body>
+		<button onclick="test();">按钮</button>
+		<button onclick="test1();">按钮1</button>
+		<button onclick="test2();">按钮2</button>
+	</body>
+</html>
+<script>
+	function test(){
+		var a = {};
+		a.valueOf=function(){//重写valueOf方法
+			alert("调用了valueOf方法");   
+			return false;
+		}
+		a.toString=function(){//重写toString
+			alert("调用了toString方法")
+			//return {};
+			return 89;
+		}
+		
+		console.log(a*4);//这里很明显，a对象必须转为数字，因此先调用valueOf方法结果为0
+	}
+</script>
+<script>
+	function test1(){
+		var a = {};
+		a.valueOf=function(){//重写valueOf方法
+			alert("调用了valueOf方法");   
+			return 'hxw';
+		}
+		a.toString=function(){//重写toString
+			alert("调用了toString方法")
+			//return {};
+			return 89;
+		}
+		
+		console.log(a*4);//这里很明显，a对象必须转为数字，先调用valueOf方法，它返回一个字符串原始值，因此用'hxw'字符串转为数字为NaN因此结果为NaN
+	}
+</script>
+<script>
+	function test2(){
+		var a = {};
+		a.valueOf=function(){//重写valueOf方法
+			alert("调用了valueOf方法");   
+			return {};
+		}
+		a.toString=function(){//重写toString
+			alert("调用了toString方法")
+			//return {};
+			return '11';
+		}
+		
+		console.log(a<'3');//此时valueOf返回的就不是原始值了，因此调用toString方法，由于toString方法返回一个原始值，因此用该原始值转化为数字后进行运算
+	}
+	/*总结：1.当对象a需要转为数字时会首先调用其valueOf方法，如果它返回的是原始值，就将该原始值转为数字代替对象a进行运算；如果对象a的valueOf方法不返回
+	 原始值，就调用对象a的toString方法，如果其toString方法返回的是一个原始值，就将该原始值转为数字代替对象a进行运算；如果连对象a的toString方法
+	 返回的仍不是原始值，就直接报TypeError*/
+</script>

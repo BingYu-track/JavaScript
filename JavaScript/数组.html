@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>数组</title>
+	</head>
+	<body>
+		<button onclick="test();">按钮</button>
+		<button onclick="test1();">按钮1</button>
+		<button onclick="test2();">按钮2</button>
+		<button onclick="test3();">数组for in遍历</button>
+	</body>
+</html>
+<script>
+	function test(){
+		var a = [1,2,3];
+		a.unshift(4); //向数组头部添加元素
+		console.log(a);//[4,1,2,3]  
+		
+		a.shift();//从数组头部删除元素并改变长度，没有参数
+		console.log(a);//[1,2,3]
+		
+		a = [4,1,2,3];
+		delete a[2];
+		console.log(a);//[4,1,undefined,3]
+		
+		alert(a.pop());//3  pop();方法删除末尾的元素并返回删除的元素
+		console.log(a);//[4,1,undefined]  
+	}
+</script>
+<script>
+	function test1(){
+		var a = [12, 32, 33, 4];
+		a.sort(function(a,b){//这参数，a代表数组中前一个元素，b代表数组中后一个元素
+			return a-b; //如果函数的返回值大于0，数组中前面的元素会会排到后面去;反之返回值小与0，则前面的元素位置不变
+		});
+		console.log(a);//  [12, 32, 4, 33]
+	}
+	
+	function test2(){
+		var a = [12, 32, 33, 4];
+		a.sort(function(a,b){//这参数，a代表数组中前一个元素，b代表数组中后一个元素
+			console.log(a);
+			console.log(b);
+			return 1; //如果函数的返回值大于0，数组中前面的元素会会排到后面去;反之返回值小与0，则前面的元素位置不变
+		});
+		console.log(a);//  [4, 33, 32, 12]
+	}
+</script>
+<script>
+	function test3(){
+		var a = ['a','b','c','d','e','f'];
+		for (var b in a) {
+			 alert(b); //0,1,2,3,4,5 输出的是a对象的属性  在js中数组的索引就是数组的属性a[0]表示第一位的的元素也可以表示访问0这个属性
+			 console.log(a[b]);//a,b,c,d,e,f
+		}6
+	}
+</script>
