@@ -10,6 +10,11 @@
 		<button onclick="test2();">filter()按钮</button>
 		<button onclick="test3();">every()按钮</button>
 		<button onclick="test4();">some()按钮</button>
+		<button onclick="test5();">reduce()按钮</button>
+		<button onclick="test6();">reduceRight()按钮</button>
+		<button onclick="reduceExpand();">reduce扩展按钮</button>
+		<button onclick="test7()">indexOf()按钮</button>
+		<button onclick="test8()">indexOf扩展按钮</button>
 	</body>
 </html>
 <script>
@@ -71,4 +76,110 @@
 		console.log(arr);//true  只要数组元素中的其中一个等于9，就返回true
 	}
 </script>
+<!--
+	作者：525782303@qq.com
+	时间：2017-10-26
+	总结：数组的函数forEach()、map()、filter()、every()、some()它们的参数都是一个函数，假设该函数为tfun()，tfun又有三个参数tfun(element,index,arr)
+	分别为当前的"数组元素"、"当前索引"、"数组"
+-->
 
+
+<script type="text/javascript">
+	function test5(){
+		var data = [1,2,3,4,5];
+		var sum = data.reduce(function(x,y,index){   
+			console.log(x+":"+y+":"+index);
+			return x+y;
+		},10);
+		console.log(sum);//25
+	}
+	/*
+执行结果：  10:1:0
+		 11:2:1
+		 13:3:2
+		 16:4:3
+		 20:5:4
+	 	 25
+	 	 
+	 详解：reduce(callbackfn,initialValue)函数有两个参数,callbackfn是一个函数作为累加器,将数组中的每个值(从左到右)开始合并，最终为一个值
+	  callbackfn这个函数又包含四个参数callbackfn(preValue,element,index,arr)。
+	  element:当前数组元素
+	  index:当前数组元素的索引
+	  arr:调用 reduce()方法的数组
+	  
+	 1)如果initialValue未被提供，那么preValue等于数组中的第一个元素，element等于数组中的第二个元素,index为element所在的索引。
+	 2) 如果 initialValue在调用 reduce()时被提供，那么第一个 preValue 等于 initialValue ，并且element等于数组中的第一个元素;
+	 ------总结:reduce()主要可以用来进行求和等操作，执行效率远高于for循环
+	  */
+</script>
+<script type="text/javascript">
+	function test6(){
+		var data = [1,2,3,4,5];
+		var sum = data.reduceRight(function(x,y,index){ 
+			console.log(x+":"+y+":"+index);
+			return x+y;
+		},10);
+		console.log(sum);//25
+	}
+	/*
+	执行结果：  10:5:4
+			 15:4:3
+			 19:3:2
+			 22:2:1
+			 24:1:0
+			 25
+		reduceRight()函数原理和reduce()一样，只是合并的顺序改变了reduceRight是从右向左合并，同样reduceRight(callbackfn,initialValue)有两个参数
+		callbackfn也包含这四个参数callbackfn(preValue,element,index,arr)
+		
+	 1)如果initialValue未被提供，那么preValue等于数组中的最后一个元素，element等于数组中的倒数第二个元素,index为element所在的索引。
+	 2) 如果 initialValue在调用 reduce()时被提供，那么第一个 preValue 等于 initialValue，并且element等于数组中的最后一个元素;
+	 */
+</script>
+<script type="text/javascript">
+	function extend(o,p){
+		for (prop in p) {  //遍历p中的所有属性
+			o[prop] = p[prop]; //prop为p对象的属性名，这里把p对象的属性值赋给o对象的同名属性
+		}
+		return o;
+	}
+	//定义一个union方法，该方法主要作用是返回一个包含o,p两个对象的属性的新对象
+	function union(o,p){
+		var b = extend(extend({},o),p);
+		return b;
+	}
+	//reduce()方法扩展，获取任意数目对象的并集
+	function reduceExpand(){
+		var objects = [{x:1},{y:2},{z:3,k:4}];
+		var c = objects.reduce(union);
+		console.log(c);//{x:1,y:2,z:3,k:4}
+	}
+</script>
+<script type="text/javascript">
+	function test7(){
+		var data = [1,2,3,4,5];
+		var i = data.indexOf(4,1);
+		console.log(i);//3
+	}
+	//indexOf()用来搜索数组中匹配到的第一个元素的索引，它有两个参数；第一个参数是要搜索的值，第二个参数是从哪个索引开始搜索
+</script>
+
+<script type="text/javascript">
+	//返回所有匹配数组a中匹配x的索引
+	function findAll(a,x){ //a表示待搜索的数组
+		var result = [];
+		var len = a.length;
+		var pos = 0;
+		while(pos<len){
+			pos = a.indexOf(x,pos);
+			if(pos===-1) break;
+			result.push(pos);
+			pos +=1;
+		}
+		return result;
+	}
+	function test8(){
+		var arr = [1,3,2,4,5,3,2,5,6,2];
+		var b = findAll(arr,2);
+		console.log(b);//[2,6,9]
+	}
+</script>
