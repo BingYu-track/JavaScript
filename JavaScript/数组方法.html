@@ -103,6 +103,7 @@
 	 	 
 	 详解：reduce(callbackfn,initialValue)函数有两个参数,callbackfn是一个函数作为累加器,将数组中的每个值(从左到右)开始合并，最终为一个值
 	  callbackfn这个函数又包含四个参数callbackfn(preValue,element,index,arr)。
+	  preValue：上一次调用回调返回的值，或者是提供的初始值(initialValue)
 	  element:当前数组元素
 	  index:当前数组元素的索引
 	  arr:调用 reduce()方法的数组
