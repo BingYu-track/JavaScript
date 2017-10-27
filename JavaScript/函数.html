@@ -2,14 +2,78 @@
 <html>
 	<head>
 		<meta charset="UTF-8">
-		<title>函数</title>
+		<title>函数的四种调用形式</title>
 	</head>
 	<body>
-		
+		<button onclick="test1();">按钮1</button>
+		<button onclick="test2();">按钮2</button>
 	</body>
 	<script type="text/javascript">
+		"use strict";
 		function test1(){ 
-			console.log("函数定义");
+			var strict = (function(){//用来判断当前运行的脚本是否是严格模式
+				return this;
+			}());
+			console.log(strict);
+			//严格模式下返回undefined(因为严格模式下调用上下文的是undefined)  非严格模式下返回的是全局对象window(非严格模式下调用上下文的是全局对象window)
 		}
+	</script>
+	
+	<!--
+    	函数有四种调用形式
+    	1.作为函数
+    	2.作为方法
+    	3.作为构造函数
+    	4.通过它们的call()和apply()方法间接调用
+    -->
+	<script>
+		/*1.作为函数调用：
+		函数调用形式是最常见的形式，也是最好理解的形式。所谓函数形式就是一般声明函数后直接调用即是
+		作为函数调用又有两种形式；一种是声明一个函数，并调用;另一种是使用表达式定义函数再调用，无论哪一种，它们都属于"函数形式的调用"
+		*/
+		function func() {// 声明一个函数，并调用
+		    alert("Hello World");
+		    alert(this);
+		}
+		func();
+		
+		var func = function() {//或者 使用表达式定义函数，然后调用
+		    alert("你好，程序员");
+		    alert(this);
+		};
+		func();
+		//这里的关键在于当作为函数调用时，函数里的 this 关键字指全局对象，如果在浏览器中就是 window 对象(非严格模式);如果是严格模式this指的就是undefined
+		
+		
+		/*2.作为方法调用
+		 同样的是函数，将其赋值给一个对象的成员以后，就不一样了。将函数赋值给对象的成员后，那么这个就不在称为函数，而应该叫做方法
+		 */
+		// 定义一个函数
+		var func = function() {
+		    alert(this);
+		};
+		// 将其赋值给一个对象
+		var o = {};
+		o.fn = func; // 注意这里不要加圆括号
+		o.fn();//此时就是方法调用，与函数调用不同的是，此时this指代的是调用该方法的对象o
+		
+		
+		
+		/*3.作为构造函数调用
+		 */
+		var Person = function(){
+			this.name = "程序员";
+			console.log(this);// 在构造方法中，this指的是被new出来是对象
+			//return {x:123};
+			//return 1;
+		}
+		var p = new Person();
+		console.log(p);
+		/*{x:123} 构造方法如果返回对象，那么就保留原意。如果返回的是非对象，比如数字、布尔和字符串，
+		那么就返回 this，如果没有 return 语句，那么也返回 this*/
+		
+		
+		/*4.call()和apply()方法间接调用
+		 */
 	</script>
 </html>
