@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>函数的形参和实参</title>
+	</head>
+	<body>
+		<button onclick="test1();">按钮1</button>
+	</body>
+</html>
+<script>
+	//arguments
+	function test1(){
+		function check(a,b,c){
+			console.log("check传入的参数数量："+arguments.length);
+			console.log(arguments);
+		}
+		check(1,2,3,4); //4
+		console.log("test1传入的参数数量"+arguments.length); //0
+	}
+	//在函数体内，标识符"arguments"是指向实参对象的引用，它是一个类数组对象，它包含length属性，可以知道当前函数传入的参数数量和参数
+</script>
