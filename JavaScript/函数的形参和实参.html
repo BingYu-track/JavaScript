@@ -6,6 +6,7 @@
 	</head>
 	<body>
 		<button onclick="test1();">按钮1</button>
+		<button onclick="test2();">按钮2</button>
 	</body>
 </html>
 <script>
@@ -18,5 +19,24 @@
 		check(1,2,3,4); //4
 		console.log("test1传入的参数数量"+arguments.length); //0
 	}
-	//在函数体内，标识符"arguments"是指向实参对象的引用，它是一个类数组对象，它包含length属性，可以知道当前函数传入的参数数量和参数
+	/*在函数体内，标识符"arguments"是指向实参对象的引用，它是一个类数组对象，当调用一个函数时会生成该对象
+	它包含length属性，可以知道当前函数传入的参数数量
+	和参数*/
+</script>
+<script type="text/javascript">
+	var t = function(){
+		alert("callee测试："+arguments.callee);//输出当前函数
+		alert("caller测试"+t.caller); //输出了test2()函数
+	}
+	function test2(){
+		t();
+		console.log(arguments.callee);//输出当前函数
+		console.log(t());//输出null 
+		/*caller保存着调用当前函数的函数的引用（指向当前函数的直接父函数）,caller 属性只有
+		在函数执行时才有定义。 如果函数是由 Javascript 程序的顶层调用的，那么 caller 包含的就是 null*/
+	}
+	/*输出结果ƒ test2(){
+				t();
+				console.log(arguments.callee);   callee是arguments对象的一个属性表示当前函数对象本身的引用 如果是callee()就是调用自身
+		}*/
 </script>
