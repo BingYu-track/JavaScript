@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<button onclick="test1();">按钮1</button>
+	</body>
+</html>
+<script type="text/javascript">
+	function test1(){
+		function arrayCopy(/*array*/from,/*index*/from_start,/*array*/to,/*index*/to_start,/*integer*/length){
+			
+		}
+		function easyCopy(args){
+			arrayCopy(args.from,args.from_start,args.to,args.to_start,args.length);
+		}
+		var a = [1,2,3,4],b=[];
+		easyCopy({from:a,to:b,length:4});
+	}
+</script>
+<script type="text/javascript">
+	//自定义函数属性
+	//计算阶乘，并把结果缓存到函数的属性中
+	var factorial = function(n){
+		if(isFinite(n) && n>0 && n==Math.round(n)){ //对参数作限制，只能是正整数
+			if(!(n in factorial)){
+				factorial[n]= n*factorial(n-1);//使用了递归，自身调用自身，把结果存放在factorial属性中
+				console.log(factorial[n]);
+			}
+			return factorial[n];
+		}
+		else return 1;
+	}
+	var result = factorial(3);
+	console.log(result);//1
+</script>
+第一次执行的是factorial(3)：
+factorial[3]=3*factorial(2)=3*factorial[2]=3*2*factorial(1)=3*2*1*factorial(0);
+
+第二次执行的是factorial(2)：
+factorial[2]=2*factorial(1)
+
+第三次执行的是factorial(1)：
+factorial[1]=1*factorial(0);
+
+<script type="text/javascript">
+	function(){
+		
+	}
+	
+</script>
