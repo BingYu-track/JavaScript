@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>闭包</title>
+	</head>
+	<body>
+	</body>
+</html>
+<script type="text/javascript">
+	var fn;
+	function foo() {
+	    var a = 2;
+	    function baz() { 
+	        console.log( a );
+	    }
+	    fn = baz; 
+	}
+	function bar() {
+	    fn(); 
+	}
+	foo();
+	bar();
+	/*再调用bar函数时实际是调用的baz函数，而在baz函数中用到了它上一级作用域foo的变量a，此时foo的执行环境不会被垃圾回收器释放，此时foo就是"闭包"(Closure)
+	我们知道，函数的执行上下文，在执行完毕之后，生命周期结束，那么该函数的执行上下文就会失去引用。其占用的内存空间很快就会被垃圾回收器释放。可是闭包的存在，会阻止这一过程*/
+</script>
+
+<script type="text/javascript">
+	var fn;
+	var m = 20;
+	function foo() {
+	    var a = 2;
+	    function baz(a) { 
+	        console.log(a);
+	    }
+	    fn = baz; 
+	}
+	function bar() {
+	    fn(m); 
+	}
+	foo();
+	bar();
+	/*
+	 此时会发现没有闭包，因为此时调用bar中的fn(m)实际上就是调用baz(m),此时的a是传过去的，而没有引用foo的变量a，因此不会产生闭包
+	 闭包的形成需要两个条件:
+			1.在函数内部创建新的函数；
+			2.新的函数在执行时，访问了它上层函数作用域的变量对象(前提是有上层函数)；
+			因此闭包的存在可以让我们访问到原本访问不了的局部变量
+	 */
+</script>
+
+<script type="text/javascript">
+	function foo() {
+	    var a = 2;
+	
+	    return function bar() {
+	        var b = 9;
+	
+	        return function fn() {
+	            console.log(a);
+	        }
+	    }
+	}
+	var bar = foo();  //此时bar = bar
+	var fn = bar(); //此时fn=fn()
+	fn();
+	/*foo为闭包，因为fn()实际调
+			function fn() {
+	            console.log(a);
+	        }      而该函数引用了它的上级函数作用域的变量a*/
+</script>
+
+<script type="text/javascript">
+	function foo() {
+	    var a = 2;
+	
+	    return function bar() {
+	        var b = 9;
+	
+	        return function fn() {
+	            console.log(a, b);
+	        }
+	    }
+	}
+	var bar = foo();
+	var fn = bar();
+	fn();//此时bar和foo都为闭包，同上分析
+</script>
+
+<script type="text/javascript">
+	(function() {
+	    var a = 10;
+	    var b = 20;
+	
+	    var test = {
+	        m: 20,
+	        add: function(x) {
+	            return a + x;
+	        },
+	        sum: function() {
+	            return a + b + this.m;
+	        },
+	        mark: function(k, j) {
+	            return k + j;
+	        }
+	    }
+	
+	    window.test = test;
+	
+	})();
+
+	test.add(100);
+	test.sum();
+	test.mark();//此时匿名函数为闭包，由于test指向的是test对象，而该test对象引用了上层匿名函数作用域的a,b变量
+
+	var _mark = test.mark;
+	_mark();
+	
+</script>
+
+<script type="text/javascript">
+	function clause(){
+		var a = 'hxw';
+		v();
+		function v(){
+			alert(a);//这里引用了clause的变量a，clause是闭包
+		}
+	}
+	clause();
+</script>
+<!--
+	作者：525782303@qq.com
+	时间：2017-11-01
+	总结：1.闭包是在函数被调用执行的时候才被确认创建的。
+	     2.闭包的形成，与作用域链的访问顺序有直接关系。
+	     3.只有内部函数访问了上层作用域链中的变量对象时，才会形成闭包，因此，我们可以利用闭包来访问函数内部的变量。
+-->
