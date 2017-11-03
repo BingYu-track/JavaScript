@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>正则表达式对象</title>
+	</head>
+	<body>
+	</body>
+</html>
+<script type="text/javascript">
+	/*创建正则表达式的方式有两种：1.以字面量的形式创建 eg:var experssion = /pattern/ flags  (字面量形式只需转义一次就行)
+	 						    2.以构造函数的形式创建 eg:var experssion = new RegExp("pattern","flags")(构造函数参数是字符串，所有元字符都需要双重转义)
+	*/
+	/*
+		n+	匹配任何包含一个或多个n的字符串。
+		n*	匹配任何包含零个或多个n的字符串。
+		n?	匹配任何包含零个或一个n的字符串。
+		n{X}	匹配包含刚好有 X 个n的序列的字符串。
+		n{X,Y}	匹配包含 至少 X个但不超过 Y个 n 的序列的字符串。
+		n{X,}	匹配包含至少有 X 个 n 的序列的字符串。
+		n$	匹配任何结尾为 n 的字符串。
+		^n	匹配任何开头为 n 的字符串。
+		?=n	匹配任何其后紧接指定字符串 n 的字符串。
+		?!n	匹配任何其后没有紧接指定字符串 n 的字符串。
+		
+		捕获组可以通过从左到右计算其开括号来编号 。例如，在表达式 (A)(B(C)) 中，存在四个这样的组：
+			0   (A)(B(C))
+			
+			1   (A)
+			
+			2   (B(C))
+			
+			3   (C)
+		组零始终代表整个表达式
+	*/
+	var text = "mom and dad and baby";
+	var pattern = /mom( and dad( and baby)?)?/gi;   //这里一个括号表示一个"捕获组"
+	var matches = pattern.exec(text);//exec()方法返回一个数组(每个元素就是每个捕获组匹配的项) ["mom and dad and baby", " and dad and baby", " and baby"]
+	console.log(matches);//
+	alert(matches.index); // 0
+	alert(matches.input); // "mom and dad and baby"
+	alert(matches[0]); // "mom and dad and baby"
+	alert(matches[1]); // " and dad and baby"
+	alert(matches[2]); // " and baby"
+	
+	alert(RegExp.$1); //and dad and baby
+	alert(RegExp.$2);//and baby
+</script>
+<script type="text/javascript">
+	/*它会在 RegExpObject 的 lastIndex 属性指定的字符处开始检索字符串 string。当 exec() 找到了与表达式相匹配的文本时，在匹配后，
+	它将把 RegExpObject 的 lastIndex 属性设置为匹配文本的最后一个字符的下一个位置*/
+	var text = "cat,baidu,ali,tenct";
+	var pattern = /t/;
+</script>
+<!--
+	元字符
+.	查找单个字符，除了换行和行结束符。
+\w	查找单词字符。
+\W	查找非单词字符。
+\d	查找数字。
+\D	查找非数字字符。
+\s	查找空白字符。
+\S	查找非空白字符。
+\b	匹配单词边界。
+\B	匹配非单词边界。
+\0	查找 NUL 字符。
+\n	查找换行符。
+\f	查找换页符。
+\r	查找回车符。
+\t	查找制表符。
+\v	查找垂直制表符。
+\xxx	查找以八进制数 xxx 规定的字符。
+\xdd	查找以十六进制数 dd 规定的字符。
+\uxxxx	查找以十六进制数 xxxx 规定的 Unicode 字符。-->

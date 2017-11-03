@@ -8,13 +8,15 @@
 	</body>
 </html>
 <script type="text/javascript">
+	debugger;
 	var fn;
 	function foo() {
 	    var a = 2;
 	    function baz() { 
-	        console.log( a );
+		    alert(b);
+		    console.log( a );
 	    }
-	    fn = baz; 
+	    fn = baz;
 	}
 	function bar() {
 	    fn(); 
@@ -26,7 +28,7 @@
 </script>
 
 <script type="text/javascript">
-	var fn;
+	/*var fn;
 	var m = 20;
 	function foo() {
 	    var a = 2;
@@ -39,7 +41,7 @@
 	    fn(m); 
 	}
 	foo();
-	bar();
+	bar();*/
 	/*
 	 此时会发现没有闭包，因为此时调用bar中的fn(m)实际上就是调用baz(m),此时的a是传过去的，而没有引用foo的变量a，因此不会产生闭包
 	 闭包的形成需要两个条件:
@@ -135,3 +137,13 @@
 	     2.闭包的形成，与作用域链的访问顺序有直接关系。
 	     3.只有内部函数访问了上层作用域链中的变量对象时，才会形成闭包，因此，我们可以利用闭包来访问函数内部的变量。
 -->
+<!--<script type="text/javascript">
+	function constfunc(v){
+		return function(){return v;}
+	}
+	var funcs = [];
+	for(var i=0;i<10;i++){
+		funcs[i]=constfunc(i);
+	}
+	funcs[5]()
+</script>-->
