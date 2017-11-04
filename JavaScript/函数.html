@@ -73,7 +73,36 @@
 		那么就返回 this，如果没有 return 语句，那么也返回 this*/
 		
 		
-		/*4.call()和apply()方法间接调用
+		/*4.call()和apply()方法间接调用函数
+		  每个函数都包含两个非继承而来的方法：apply()和call()，它们的作用是在特定的作用域中调用函数
+		  a. call()接收两个参数，一个是函数运行的作用域（this），另一个是参数数组
+		  b. apply()第一个参数和apply()方法的一样，但是传递给函数的参数必须列举出来 两种方法作用都是一样的
 		 */
+		//例1：
+		function sum(num1, num2){
+			return num1 + num2;
+		}
+		function callSum1(num1, num2){
+			return sum.apply(this, arguments); // 传入arguments对象； 由于callSum1函数是在全局作用域调用的，因此这里的this指的是window，这时
+			//sum.apply(this, arguments)指的就是在全局作用域里调用sum函数
+		}
+		function callSum2(num1, num2){
+			return sum.apply(this, [num1, num2]); // 传入数组
+		}
+		alert(callSum1(10,10)); //20
+		alert(callSum2(10,10)); //20
+		
+		//例2：
+		var name = "xiaoming";  
+    	var a = function () {  
+        	alert(this.name);  
+    	};  
+	    var b = {  
+	      name: "xiaohua"  
+	    };  
+    	a.call(b) //此时传入的作用域是b对象，因此a.call(b)指的是在b的环境中调用a函数，此时函数a的this指向了b对象
+    	/**
+    	 * 总结:call和apply方法的好处就是不再需要对象和方法耦合在一起了。
+    	 */
 	</script>
 </html>
