@@ -45,6 +45,9 @@
 	
 	alert(RegExp.$1); //and dad and baby
 	alert(RegExp.$2);//and baby
+	/*存储捕获组的构造函数属性。访问这些属性的语
+法是RegExp.$1、RegExp.$2…RegExp.$9，分别用于存储第一、第二……第九个匹配的捕获组。在
+调用exec()或test()方法时，这些属性会被自动填充。*/
 </script>
 <script type="text/javascript">
 	/*它会在 RegExpObject 的 lastIndex 属性指定的字符处开始检索字符串 string。当 exec() 找到了与表达式相匹配的文本时，在匹配后，
