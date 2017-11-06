@@ -55,6 +55,23 @@
 	var text = "cat,baidu,ali,tenct";
 	var pattern = /t/;
 </script>
+<script type="text/javascript">
+	//字符串模式匹配方法
+	//例1
+	var text = "cat, bat, sat, fat";
+	var pattern = /.at/;
+	var matches = text.match(pattern);//该方法与pattern.exec(text)作用是一样的
+	alert(matches);//cat
+	
+	//例2
+	var text = "cat, bat, sat, fat";
+	var pattern = /.at/g;
+	var matches = text.match(pattern);
+	alert(matches);//cat,bat,sat,fat
+	/*总结：这里exec和match有一些不同，exec方法是属于正则表达式对象的，而match方法是属于字符串的
+	 * 再全局匹配下，exec方法也只返回一个结果，再次调用会返回下一个匹配项；而match方法进行了全局匹配搜索，一次性全部返回
+	 */
+</script>
 <!--
 	元字符
 .	查找单个字符，除了换行和行结束符。

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<button onclick="">按钮1</button>
+	</body>
+</html>
+<script type="text/javascript">
+	window.color = "red";
+	var o = { color: "blue" };
+	function sayColor(){
+		alert(this.color);
+	}
+	var objectSayColor = sayColor.bind(o);
+	objectSayColor(); //blue
+	//sayColor()调用bind()并传入对象o，创建了objectSayColor()函数，此时调用新的函数objectSayColor时就会把原始的函数sayColor当做o对象的方法来调用，此时this也就是o对象
+</script>
