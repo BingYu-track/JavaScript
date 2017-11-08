@@ -18,8 +18,29 @@
 		};
 		var person1 = new Person();
 		var person2 = new Person();
-		alert(person1.sayName==person2.sayName);//true
+		alert(person1.sayName==person2.sayName);//true 说明两个实例的sayName方法是同一个对象
 		console.log(person1.__proto__==Person.prototype);//true
-		//总结：构造函数的prototype与所有实例对象的__proto__都指向原型对象。而原型对象的constructor指向构造函数
+		//总结：构造函数的prototype属性与所有实例对象的__proto__都指向原型对象。而原型对象的constructor指向构造函数
+	</script>
+	<script type="text/javascript">
+		function Person(name,age){
+			
+		}
+		Person.prototype.name='hxw';
+		Person.prototype.age=23;
+		Person.prototype.sayName=function(){
+			alert(this.name);
+		};
+		var p1 = new Person();
+		var p2 = new Person();
+		p2.name='czh';
+		var keysp1 = Object.keys(p1);
+		var keysp2 = Object.keys(p2);
+		var keysp3 = Object.keys(Person.prototype);
+		debugger;
+		console.log('p1:'+keysp1);
+		console.log('p2:'+keysp2);//name
+		console.log('p3:'+keysp3);//name,age,sayName
+		//总结：结果说明Object.keys方法只能获取实例的可枚举属性
 	</script>
 </html>
