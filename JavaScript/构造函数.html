@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>构造函数</title>
+	</head>
+	<body>
+		<button onclick="test1();">按钮1</button>
+	</body>
+<script type="text/javascript">
+	//JavaScript构造函数用来创建自定义类型的对象
+	//例如:
+	function test1(){
+		function Person(name,age){
+			this.age=age;
+			this.name=name;//注意，构造函数中的this指向的是该构造新创建的对象
+		}
+		var person = new Person('hxw',23);
+		console.log(person);//Person {age: 23, name: "hxw"}
+		alert(person instanceof Person);//true
+	}
+	var t = new test1();//
+	console.log(t);
+	alert(t instanceof test1);//true 这里说明t也变成了特定类型的对象
+	//重要：事实上，任何函数只要通过new关键字来调用，它都可以作为构造函数来创建自定义对象;
+	//如果Person函数不用new关键字进行调用，那它跟其他函数没有任何区别。
+</script>
+<script type="text/javascript">
+	//Person函数不用new关键字直接调用
+	function Person(name,age){
+			this.age=age;
+			this.name=name;//注意，构造函数中的this指向的是该构造新创建的对象
+	}
+	Person('hxw',23);
+	alert(window.name);//hxw
+	//此时Person函数没有使用关键字new来调用，现在它只作为普通函数，在全局环境下执行的，因此此时的this指的是window，因此name、age属性都添加给了window
+</script>
+<script type="text/javascript">
+	//构造函数的缺点：如果构造函数内如下有自己的方法，那么每次创建person实例时，sayName方法都会重新创建一遍(函数也是对象)
+	function Person(name,age){
+			this.age=age;
+			this.name=name;
+			this.sayName=function(){
+				alert('我的名字叫'+name);
+			}
+	}
+	var person1 = new Person('hxw',23);
+	var person2 = new Person('czh',22);
+	debugger;
+	alert(person1.sayName==person2.sayName);//false
+</script>
+</html>
