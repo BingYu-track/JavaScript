@@ -33,8 +33,9 @@
 		t();
 		console.log(arguments.callee);//输出当前函数
 		console.log(t.callee());//输出null 
-		/*caller保存着调用当前函数的函数的引用（指向当前函数的直接父函数）,caller 属性只有
-		在函数执行时才有定义。 如果函数是由 Javascript 程序的顶层调用的，那么 caller 包含的就是 null*/
+		/*callee保存着调用当前函数的函数的引用（指向当前函数的直接父函数）,callee 属性只有
+		在函数执行时才有定义。 如果函数是由 Javascript 程序的顶层调用的，那么 callee 包含的就是 null.
+		caller保存的是调用当前函数的函数的引用*/
 	}
 	/*输出结果ƒ test2(){
 				t();
