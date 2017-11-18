@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>继承</title>
+	</head>
+	<body>
+	</body>
+	<!--<script type="text/javascript">
+		//继承方式1：调用父类的构造函数继承其属性
+		function SuperType(){
+			this.colors = ["red", "blue", "green"];
+		}
+		function SubType(){
+			//继承了SuperType
+			SuperType.call(this);//调用父类SuperType的构造方法执行了里面的代码，继承了colors属性
+		}
+		var instance1 = new SubType();
+		instance1.colors.push("black");
+		alert(instance1.colors); //"red,blue,green,black"
+		var instance2 = new SubType();
+		alert(instance2.colors); //"red,blue,green"
+		//问题是构造函数里面定义的方法就无法复用，调用构造函数都会创建该函数对象
+	</script>-->
+	
+	<script type="text/javascript">
+		//继承方式2：组合继承(使用原型链来实现对共有方法、属性的继承。而通过调用父类的构造函数来实现对实例独有属性、方法的继承)这是重点，经常用到
+		function SuperType(name){
+			this.name = name;
+			this.colors = ["red", "blue", "green"];
+		}
+		SuperType.prototype.sayName = function(){
+			alert(this.name);
+		};
+		function SubType(name, age){
+			//继承属性
+			SuperType.call(this, name);  //通过调用父类构造方法继承name、colors实例属性
+			this.age = age;
+		}
+		//继承方法
+		SubType.prototype = new SuperType();    //将父类对象作为SubType的原型对象，由于父类对象的原型有sayName方法，此时SubType对象也会有
+		SubType.prototype.constructor = SubType;
+		SubType.prototype.sayAge = function(){
+			alert(this.age);
+		};
+		var instance1 = new SubType("Nicholas", 29);
+		instance1.colors.push("black");
+		alert(instance1.colors); //"red,blue,green,black"
+		instance1.sayName(); //"Nicholas";
+		instance1.sayAge(); //29
+		
+		var instance2 = new SubType("Greg", 27);
+		alert(instance2.colors); //"red,blue,green"
+		instance2.sayName(); //"Greg";
+		instance2.sayAge(); //27
+		
+		console.log(SubType.prototype.__proto__);//"{sayName: ƒ, constructor: ƒ}"
+	</script>
+	
+	<!--<script type="text/javascript">
+		//继承方式3：原型式继承(原型式继承本质其实就是个浅拷贝，以一个对象为模板复制出新的对象)
+		function object(o){
+			function F(){}
+			F.prototype = o;
+			return new F();
+		}
+		
+		var person = {
+			name: "Nicholas",
+			friends: ["Shelby", "Court", "Van"]
+		};
+		
+		var anotherPerson = object(person); //将person对象作为F的原型对象，返回F的实例anotherPerson
+		anotherPerson.name = "Greg"; 
+		anotherPerson.friends.push("Rob");
+		
+		var yetAnotherPerson = object(person); //将person对象作为F的原型对象，返回F的实例yetAnotherPerson
+		yetAnotherPerson.name = "Linda";	
+		yetAnotherPerson.friends.push("Barbie");
+		alert(person.friends); //"Shelby,Court,Van,Rob,Barbie"
+		//注意：当实例的属性名与其原型对象的属性名重复后，实例的属性会覆盖掉原型对象的属性；但是直接通过原型对象访问该属性，访问的是原型对象的属性。
+		//总结：此时anotherPerson和yetAnotherPerson对象相当于person的两个副本
+	</script>-->
+	
+	<!--<script type="text/javascript">
+		//继承方式4：寄生式继承 (与原型式一样，只是寄生式继承就是把原型式继承再次封装，然后在对象上扩展新的方法，再把新对象返回) 
+		function object(o){
+			function F(){}
+			F.prototype = o;
+			return new F();
+		}
+		
+		function createAnother(original){
+			var clone = object(original); //通过调用函数创建一个新对象
+			clone.sayHi = function(){ //以某种方式来增强这个对象
+				alert("hi");
+			};
+			return clone; //返回这个对象
+		}
+	</script>-->
+	
+	<script type="text/javascript">
+		//回忆组合式继承(组合式继承有一个缺点，无论什么情况下都会调用两次父类的构造函数)
+		function SuperType(name){
+			this.name = name;
+			this.colors = ["red", "blue", "green"];
+		}
+		
+		SuperType.prototype.sayName = function(){
+			alert(this.name);
+		};
+		
+		function SubType(name, age){
+			SuperType.call(this, name); //第二次调用SuperType()  通过调用父类构造方法继承name、colors实例属性
+			this.age = age;
+		}
+		
+		SubType.prototype = new SuperType(); //第一次调用SuperType() 将父类对象作为SubType的原型对象，继承其原型属性和方法
+		SubType.prototype.constructor = SubType;
+		SubType.prototype.sayAge = function(){
+			alert(this.age);
+		};
+		//////////////////////////////////////////////////////////
+		//继承方式5：寄生组合式继承(其本质就是使用寄生式继承来继承父类的原型)
+		function object(o){
+			function F(){}
+			F.prototype = o;
+			return new F();
+		}
+		
+		function inheritPrototype(subType, superType){  //superType为父类
+			var hxw = object(superType.prototype); //创建对象，返回了一个基于父类原型对象的副本(即hxw对象现在的原型就是父类superType的原型)
+			hxw.constructor = subType; //增强对象
+			subType.prototype = hxw; //指定hxw对象作为subType的原型对象
+		}
+		
+		function SuperType(name){
+			this.name = name;
+			this.colors = ["red", "blue", "green"];
+		}
+		
+		SuperType.prototype.sayName = function(){
+			alert(this.name);
+		};
+		
+		function SubType(name, age){
+			SuperType.call(this, name);
+			this.age = age;
+		}
+		inheritPrototype(SubType, SuperType);
+		SubType.prototype.sayAge = function(){
+			alert(this.age);
+		};
+	</script>
+</html>
