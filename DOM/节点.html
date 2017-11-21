@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>节点</title>
+	</head>
+	<body id="jk">
+		<button id="gg" onclick="test();">按钮</button>
+		<button onclick="test1();">按钮1</button>
+		<ul id="hk">
+			<li>item1</li>
+			<li>item2</li>
+			<li>item3</li>
+		</ul>
+	</body>
+	<script type="text/javascript">
+		var someNode = document.getElementById('gg');
+		alert(someNode.nodeName);
+		alert(someNode.nodeValue);
+	</script>
+	<script type="text/javascript">
+		function test(){
+			var bu = document.getElementById('jk');
+			var childNodes = bu.childNodes;//获取body标签下的所有子元素
+			alert(childNodes.length);
+			/*for (var a = 0;a<=childNodes.length;a++) {
+				console.log(childNodes[a]);
+			}*/
+			childNodes.forEach(function(a,b,c){
+				alert(a.nodeName);
+			});
+			bu.appendChild(childNodes[1]); //此时第二个元素button被移动到childNodes的末尾
+			alert('button移动到末尾')
+			childNodes.forEach(function(a,b,c){
+				alert(a.nodeName);
+			});
+			alert(bu.lastChild);
+			alert('开始替换button');
+			bu.replaceChild(document.createElement('input'),bu.lastChild);
+			alert(bu.lastChild);
+		}
+	</script>
+	<script type="text/javascript">
+		function test1(){
+			var ul = document.getElementById('hk');
+			var deepList = ul.cloneNode(true);//执行深复制(复制其节点和其下的所有子节点)
+			var shallowList = ul.cloneNode(false);//执行浅复制(只复制节点本身)
+			alert('深复制后的节点'+deepList.childNodes.length);//7
+			alert('浅复制后的节点'+shallowList.childNodes.length);//0 说明没有子节点
+		}
+	</script>
+</html>
