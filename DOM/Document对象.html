@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Document对象</title>
+	</head>
+	<body>
+		<button onclick="test();">按钮</button>
+		<button onclick="test1();">按钮1</button>
+		<button onclick="test2();">按钮2</button>
+		<button onclick="test3();">按钮3</button>
+		<br />
+		<img src="img/alineWare.jpg" name="alineWare"/>
+		<img src="img/TB1krzCQFXXXXXkXXXXXXXXXXXX_!!0-item_pic.jpg_430x430q90.jpg"/>
+		<img src="img/TB2BvvagCvHfKJjSZFPXXbttpXa_!!1714128138.jpg_430x430q90.jpg"/>
+		<fieldset>
+			<legend>Which color do you prefer?</legend>
+			<ul>
+				<li>
+					<input type="radio" value="red" name="color" id="colorRed">
+					<label for="colorRed">Red</label>
+				</li>
+				<li>
+					<input type="radio" value="green" name="color" id="colorGreen">
+					<label for="colorGreen">Green</label>
+				</li>
+				<li>
+					<input type="radio" value="blue" name="color" id="colorBlue">
+					<label for="colorBlue">Blue</label>
+				</li>
+			</ul>
+		</fieldset>
+	</body>
+	<script type="text/javascript">
+		var html = document.documentElement;//document对象的documentElement属性表示<html>元素
+		var body = document.body;//取得对<body>的引用
+		console.log(html);
+		console.log(body)
+	</script>
+	<script>
+		function test(){
+			var title = document.title;//获得当前页面标签的引
+			document.title='胡小伟'; //将标签修改
+		}
+	</script>
+	<script type="text/javascript">
+		function test1(){
+			console.log(document.URL);//获取完整url http://127.0.0.1:8020/DOM/Document%E5%AF%B9%E8%B1%A1.html?__hbt=1511936750264
+			console.log(document.domain);//获取域名 127.0.0.1
+			console.log(document.referrer);
+		}
+	</script>
+	<script type="text/javascript">
+		function test2(){
+			var imgs = document.getElementsByTagName("img");//获取所有的<img>元素 是一个类数组
+			alert(imgs.length);
+			alert(imgs[0]);//通过索引访问其中的图片对象
+			alert(imgs[1]);
+			alert(imgs[2]);
+			alert(imgs["alineWare"].src);//http://127.0.0.1:8020/DOM/img/alineWare.jpg
+		}
+	</script>
+	<script type="text/javascript">
+		function test3(){
+			document.write("<strong>"+(new Date()).toString() +"</strong>");
+			/*通过write方法输出html代码，注意 document.write() 在页面被呈现的过程中直接向其中输出了内容。如果在文档
+			加载结束后再调用 document.write() ，那么输出的内容将会重写整个页面*/
+		}
+	</script>
+</html>
