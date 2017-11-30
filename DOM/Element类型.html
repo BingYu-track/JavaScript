@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Element类型</title>
+	</head>
+	<body>
+		<button onclick="test();">按钮</button>
+		<h2 id="name" class="hxw">胡小伟</h2>
+		<div>1</div>
+		<div>2</div>
+		<div>3</div>
+	</body>
+	<script type="text/javascript">
+		var h2 = document.getElementsByTagName("h2");
+		debugger;
+		console.log(h2.length);
+		alert(h2[0].id);
+		alert(h2[0].getAttribute("class"));
+		function test(){
+			h2[0].id="fire";//为h2的id属性重新设值
+			h2[0].className="water";//为h2的class属性重新设值
+			document.createElement("<h3 id=\">小菜</h3>")
+		}
+	</script>
+</html>
