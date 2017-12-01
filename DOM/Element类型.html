@@ -6,21 +6,54 @@
 	</head>
 	<body>
 		<button onclick="test();">按钮</button>
+		<button onclick="test1();">类名操作</button>
 		<h2 id="name" class="hxw">胡小伟</h2>
-		<div>1</div>
-		<div>2</div>
-		<div>3</div>
+		<div class="username current">1</div>
+		<div class="username current">2</div>
+		<div class="bd user disabled">3</div>
 	</body>
 	<script type="text/javascript">
+		//@ sourceURL=1.js
 		var h2 = document.getElementsByTagName("h2");
-		debugger;
 		console.log(h2.length);
 		alert(h2[0].id);
 		alert(h2[0].getAttribute("class"));
 		function test(){
 			h2[0].id="fire";//为h2的id属性重新设值
 			h2[0].className="water";//为h2的class属性重新设值
-			document.createElement("<h3 id=\">小菜</h3>")
+			debugger;
+			var czh = document.createElement("h3"); //创建h3元素
+			czh.id="czh";
+			var textNode = document.createTextNode("小菜");//创建文本节点
+			czh.appendChild(textNode);
+			document.body.appendChild(czh);
+		}
+	</script>
+	
+	<script type="text/javascript">
+		//@ sourceURL=add.vm
+		//删除"user"类
+		function test1(){
+			//先获取第3个div元素
+			var div = document.getElementsByTagName("div")[2];
+			/*//首先，取得类名字符串并拆分成数组
+			var classNames = div.className;//获取该div的所有类名 "bd user disabled"
+			var arr = classNames.split(/\s+/);// 获得["bd","user","disabled"]数组 该正则表达式是根据空白字符来分隔字符串
+			//找到要删的类名
+			var pos = -1,i,len;
+			for (i=0, len=arr.length; i < len; i++){
+				if (arr[i] == "user"){
+					pos = i;//将要删除的类名保存在pos变量中
+					break;
+				}
+			}
+			//删除类名
+			arr.splice(i,1);//根据数组再用索引删除类名
+			//把剩下的类名拼成字符串并重新设置
+			div.className = arr.join(" ");*/
+			
+			div.classList.remove("user");//html5增加的classList属性能更方便的操作类名
+			div.classList.add("hh");
 		}
 	</script>
 </html>
