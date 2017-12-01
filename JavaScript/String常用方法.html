@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>String常用方法</title>
+	</head>
+	<body>
+		<button onclick="test();">split(separator)方法</button>
+		<button onclick="test1();">split(separator,howmany)方法</button>
+		<button onclick="test2();">join(separator)方法</button>
+	</body>
+</html>
+<script type="text/javascript" charset="utf-8">
+	function test(){
+		var str = "十一名男知青，四名女知青";
+		var arr = str.split("知青");
+		console.log(arr);//["十一名男", "，四名女", ""]
+	}
+	function test1(){
+		var str = "十一名男知青，四名女知青";
+		var arr = str.split("知青",2);
+		console.log(arr);//["十一名男", "，四名女"]  这里只返回了两个元素的数组
+	}
+	//总结：参数1：separator字符串或正则表达式，从该参数指定的地方分割 字符串
+	//参数2：howmany	可选，该参数可指定返回的数组的最大长度。如果设置了该参数，返回的子串不会多于这个参数指定的数组。如果没有设置该参数，整个字符串都会被分割，不考虑它的长度。
+</script>
+
+<script type="text/javascript">
+	function test2(){
+		var arr = ["十一名男", "，四名女", ""];
+		var str = arr.join("知青");
+		console.log(str);//十一名男知青，四名女知青
+	}
+	//总结：参数separator，指定要使用的分隔符。如果省略该参数，则使用逗号作为分隔符；在这里是用“知青”来将元素进行连接
+</script>
