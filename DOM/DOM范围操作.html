@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>DOM范围操作</title>
+	</head>
+	<body>
+		<h1>你好</h1>
+		<p id="p1"><b>Hello</b> world!</p>
+		<button onclick="test();">按钮</button>
+		<button onclick="test1();">按钮1</button>
+		<button onclick="test2();">按钮2</button>
+		<button onclick="test3();">折叠</button>
+	</body>
+</html>
+<script type="text/javascript">
+	//@ sourceURL=add.vm
+	function test(){
+		var range1 = document.createRange(),range2 = document.createRange(),p1 = document.getElementById("p1");
+		console.log(range1);//Range{startContainer: document, startOffset: 0, endContainer: document, endOffset: 0, collapsed: true, …}
+		console.log(range2);//Range{startContainer: document, startOffset: 0, endContainer: document, endOffset: 0, collapsed: true, …}
+		range1.selectNode(p1);
+		console.log(range1);//{startContainer: body, startOffset: 3, endContainer: body, endOffset: 4, collapsed: false, …}
+		range2.selectNodeContents(p1);
+		console.log(range2);//Range{startContainer: p#p1, startOffset: 0, endContainer: p#p1, endOffset: 2, collapsed: false, …}
+	}
+	/*
+	 Range对象的属性：
+	 startContainer：包含范围起点的节点（即选区中第一个节点的父节点）。该例中就是指包含<p>标签元素的父节点<body>
+	 endContainer：包含范围终点的节点（即选区中最后一个节点的父节点）。同startContainer
+	 startOffset：范围在startContainer中起点的偏移量，该例就是<p>在<body>中的位置。如果startContainer 是文本节点、注释节点或CDATA 节点，那么startOffset 就是范围起点之前跳过的字符数量。否则，
+		startOffset 就是范围中第一个子节点的索引。在这里是因为<p>之前有空格，空格算作一个文本节点。
+	 endOffset：范围在endContainer 中终点的偏移量（与startOffset 遵循相同的取值规则）。
+	 */
+</script>
+<script type="text/javascript">
+	function test1(){
+		var p1 = document.getElementById("p1");
+		var helloNode = p1.firstChild.firstChild;//获取hello文本节点
+		var worldNode = p1.lastChild;//获取world文本节点
+		var range = document.createRange();
+		range.setStart(helloNode,2);//从"Hello"中的第一个l开始
+		range.setEnd(worldNode,3);//到" world!"中的r结束
+		range.deleteContents();//删除该范围
+		//结果变成这样： <p id="p1"><b>He</b>rld!</p>
+	}
+</script>
+<script type="text/javascript">
+	function test2(){
+		var p1 = document.getElementById("p1");
+		var helloNode = p1.firstChild.firstChild;
+		var worldNode = p1.lastChild;
+		range = document.createRange();
+		range.selectNode(helloNode);//选中hello文本节点范围
+		var span = document.createElement("span");
+		span.style.backgroundColor = "yellow";//创建一个黄色的span标签
+		range.surroundContents(span);//用该span标签包围该范围
+	}
+</script>
+<script type="text/javascript">
+	function test3(){
+		var p1 = document.getElementById("p1");
+		var helloNode = p1.firstChild.firstChild;
+		var worldNode = p1.lastChild;
+		var range = document.createRange();
+		range.setStart(helloNode,2);//从"Hello"中的第一个l开始
+		range.setEnd(worldNode,3);//到" world!"中的r结束
+		range.collapse(true);//折叠到起点
+		alert(range.collapsed);//查看是否处于折叠状态
+	}
+</script>
