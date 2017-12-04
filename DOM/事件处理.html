@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>事件处理</title>
+	</head>
+	<body>
+		<button>按钮</button>
+		<form method="post">
+			<input type="text" name="username" value="">
+			<input type="button" name="hxw" value="Echo Username" onclick="alert(username.value)">
+		</form>
+	</body>
+</html>
+<script type="text/javascript">
+	var button = document.getElementsByTagName("button")[0];
+	button.onclick=function(){//注意：每一个元素都有自己的"事件处理程序属性"，通过该属性可以绑定事件
+		console.log(event);//在与事件绑定的函数中会默认创建一个事件对象，该事件对象可以通过event变量来访问
+		alert("你好");
+	}
+</script>
+<script type="text/javascript">
+	var button = document.getElementsByName("hxw")[0];
+	button.addEventListener("click",function(){
+		alert("hello!");
+	},false);
+</script>
