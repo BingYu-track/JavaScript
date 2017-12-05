@@ -8,7 +8,7 @@
 		<button>按钮</button>
 		<form method="post">
 			<input type="text" name="username" value="">
-			<input type="button" name="hxw" value="Echo Username" onclick="alert(username.value)">
+			<input type="button" name="hxw" value="Echo Username" >
 		</form>
 	</body>
 </html>
@@ -24,4 +24,10 @@
 	button.addEventListener("click",function(){
 		alert("hello!");
 	},false);
+	//该方法添加事件处理程序的主要好处是可以添加多个事件处理程序
+	button.addEventListener("click",function(){
+		alert("你好！这是第二个事件");
+	},false);
+	/*addEventListener()和removeEventListener()。所有DOM节点中都包含这两个方法，并且它们都接受3 个参数：要处理的事件名、作为事件处理程序的函数和一个布尔值。
+	 * 最后这个布尔值参数如果是true，表示在捕获阶段调用事件处理程序；如果是false，表示在冒泡阶段调用事件处理程序。*/
 </script>
