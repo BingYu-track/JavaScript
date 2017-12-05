@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>事件对象</title>
+	</head>
+	<body>
+		<button id="myBtn">按钮</button>
+		<button onclick="test();">取消上面按钮绑定的事件</button>
+	</body>
+</html>
+<script type="text/javascript">
+	var btn = document.getElementById("myBtn");
+	btn.onclick=function(){
+		alert(this);//[object HTMLButtonElement]
+		alert(event.currentTarget);//[object HTMLButtonElement]
+		alert(event.target);//[object HTMLButtonElement]
+		alert(this===event.currentTarget);//true
+		alert(this===event.target);//true
+		//说明this、event.currentTarget和event.target是同一个对象，该对象就是目标元素button
+	}
+</script>
+<script type="text/javascript">
+	function test(){
+		var btn = document.getElementById("myBtn");
+		btn.onclick=null;
+		document.body.onclick=function(){
+			alert(this);//[object HTMLBodyElement]
+			alert(event.currentTarget);//[object HTMLBodyElement]
+			alert(event.target);//[object HTMLButtonElement]
+		}
+	}
+	/*当单击"取消上面按钮绑定的事件"这个按钮时，this和currentTarget 都等于document.body，因为事件处理程序是注册到这个元素上的。
+	然而，target 元素却等于按钮元素，因为它是click 事件真正的目标(我们真正点击的是这个按钮)*/
+</script>
