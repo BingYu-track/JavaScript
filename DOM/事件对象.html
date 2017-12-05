@@ -7,6 +7,12 @@
 	<body>
 		<button id="myBtn">按钮</button>
 		<button onclick="test();">取消上面按钮绑定的事件</button>
+		<div style="height: 100px;width: 200px;background-color: black;" id="myDiv">
+			<button id="divBtn">内部按钮</button>
+		</div>
+		<div style="height: 100px;width: 200px;background-color: yellow;" id="scDiv">
+			<button id="scbtn">按钮</button>
+		</div>
 	</body>
 </html>
 <script type="text/javascript">
@@ -20,6 +26,7 @@
 		//说明this、event.currentTarget和event.target是同一个对象，该对象就是目标元素button
 	}
 </script>
+
 <script type="text/javascript">
 	function test(){
 		var btn = document.getElementById("myBtn");
@@ -32,4 +39,51 @@
 	}
 	/*当单击"取消上面按钮绑定的事件"这个按钮时，this和currentTarget 都等于document.body，因为事件处理程序是注册到这个元素上的。
 	然而，target 元素却等于按钮元素，因为它是click 事件真正的目标(我们真正点击的是这个按钮)*/
+</script>
+
+<script type="text/javascript">
+	var myDiv = document.getElementById("myDiv");
+	//为div绑定多个类型事件的处理函数
+	var handler = function(event){
+		switch(event.type){
+			case "click":
+				alert("Clicked");
+				break;
+			case "mouseover":
+				event.target.style.backgroundColor="red";
+				break;
+			case "mouseout":
+				event.target.style.backgroundColor="blue";
+				break;
+		}
+	}
+	myDiv.onclick=handler;
+	myDiv.onmouseover=handler;
+	myDiv.onmouseout=handler;
+</script>
+
+<script type="text/javascript">
+	var divBtn = document.getElementById("divBtn");
+	divBtn.onclick=function(event){
+		event.stopPropagation();//由于该按钮在div中，点击该按钮后就会触发div的click事件；而这段代码可以终止事件冒泡传播，当点击该按钮此时绑定在div中的click事件便不会触发
+	}
+</script>
+
+<script type="text/javascript">
+ 	//@ sourceURL=hxw.js
+	//事件对象有一个eventPhase 属性，可以用来确定事件当前正位于事件流的哪个阶段----1：捕获阶段(需要人为启用)。2：当前事件触发   3：冒泡传播阶段
+	var scDiv = document.getElementById("scDiv");
+	scDiv.onclick=addEventListener("click",function(event){
+		alert(event.eventPhase);//1
+	},true);//为div在捕获阶段绑定点击事件
+	
+	scDiv.onclick=function(event){
+		alert(event.eventPhase);//3
+	}//为div在冒泡阶段绑定点击事件
+	
+	var btn = scDiv.childNodes[1];
+	btn.onclick=function(event){
+		alert(event.eventPhase);//2
+	}
+	//事件执行顺序：1,2,3
 </script>
