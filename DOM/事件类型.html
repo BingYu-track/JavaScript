@@ -6,9 +6,16 @@
 		<title>事件类型</title>
 	</head>
 	<body>
-		<img src="img/alineWare.jpg" onload="alert('image loaded')"/>
+		<img src="img/alineWare.jpg" id="myImage"/>
 	</body>
 </html>
 <script type="text/javascript">
-	
+	var image = document.getElementById('myImage');
+	EventUtil.addHandler(image,"load",function(event){//这里底层实际是调用的addEventListener()方法
+		event = EventUtil.getEvent();//这行代码相当于是在addEventListener()方法你调用
+		alert(EventUtil.getTarget(event).src);
+	})
+	EventUtil.addHandler(window,"resize",function(event){
+		alert("Resize");
+	});
 </script>
