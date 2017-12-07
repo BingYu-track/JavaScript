@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<script type="text/javascript" src="js/event.js" ></script>
+		<meta charset="UTF-8">
+		<title>表单脚本</title>
+	</head>
+	<body>
+		<form id="mF">
+			<input type="text" autofocus/>
+			<input type="checkbox"/>
+		</form>
+	</body>
+</html>
+<script type="text/javascript">
+	/*var form = document.getElementById('mF');
+	EventUtil.addHandler(form,"change",function(event){
+		alert("正在修改");
+	});*/
+	var textbox = document.forms[0].elements[0];//获取表单中第一个表单元素
+	textbox.value="胡小伟";
+	EventUtil.addHandler(textbox, "focus", function(event){
+		event = EventUtil.getEvent(event);
+		var target = EventUtil.getTarget(event);
+		if (target.style.backgroundColor != "red"){
+			target.style.backgroundColor = "yellow";
+		}
+		textbox.select();//选择文本
+	});
+	
+	EventUtil.addHandler(textbox, "blur", function(event){
+		event = EventUtil.getEvent(event);
+		var target = EventUtil.getTarget(event);
+		if (/[^\d]/.test(target.value)){
+			target.style.backgroundColor = "red";
+		} else {
+			target.style.backgroundColor = "";
+		}
+	});
+	
+	EventUtil.addHandler(textbox, "change", function(event){
+		event = EventUtil.getEvent(event);
+		var target = EventUtil.getTarget(event);
+		if (/[^\d]/.test(target.value)){
+			target.style.backgroundColor = "red";
+		} else {
+			target.style.backgroundColor = "";
+		}
+	});
+</script>
