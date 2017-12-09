@@ -23,7 +23,6 @@
                     </tr>
                 </thead>
                 <tbody>
-                    #foreach($!busArea in $!result)
                     <tr>
                         <td class="x30"><div><input class="checked_basisRegionService" name="busAreaCode" type="checkbox" value="$!busArea.busAreaCode" /></div></td>
                         <td class="x30"><div>1</div></td>
@@ -37,13 +36,11 @@
                         <td><div>2017-08-15 15:16:57</div></td>
                         <td><div>已启用</div></td>
                     </tr>
-                    #end
                 </tbody>
             </table> 
 	</body>
 </html>
 <script>
-	var TableToArray = function(propetyNames/*自定义属性名数组*/,table/*table元素*/){
-		
-	}
+	var table = document.getElementById("serviceListTable");
+	var propetyNames = ['id','num','busareaId','busareaName','busareaType','busarea','createPerson','gmtCreated','auditorPerson','gmtAuditor','status'];
 </script>
