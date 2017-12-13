@@ -20,7 +20,7 @@
 <script>
 	function test(){
 		var data = ['a','b','c','d'];
-		data.forEach(function(a,b,c){//说明该函数的参数从左到右分别为"数组元素"、"当前索引"、"数组"
+		data.forEach(function(a,b,c){//说明该函数的参数从左到右分别为"数组元素"、"当前索引"、"数组"，注意该方法没有返回值
 			console.log(a);//a(第一次循环)
 			console.log(b);//0(第一次循环)
 			console.log(c);//["a", "b", "c", "d"]
