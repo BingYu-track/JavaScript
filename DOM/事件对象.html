@@ -5,13 +5,15 @@
 		<title>事件对象</title>
 	</head>
 	<body>
-		<button id="myBtn">按钮</button>
+		<button id="myBtn">按钮myBtn</button>
 		<button onclick="test();">取消上面按钮绑定的事件</button>
-		<div style="height: 100px;width: 200px;background-color: black;" id="myDiv">
-			<button id="divBtn">内部按钮</button>
+		<div style="height: 100px;width: 200px;background-color: white;" id="myDiv">
+			myDiv
+			<button id="divBtn">内部按钮divBtn</button>
 		</div>
 		<div style="height: 100px;width: 200px;background-color: yellow;" id="scDiv">
-			<button id="scbtn">按钮</button>
+			scDiv
+			<button id="scbtn">按钮scbtn</button>
 		</div>
 	</body>
 </html>
@@ -31,13 +33,13 @@
 	function test(){
 		var btn = document.getElementById("myBtn");
 		btn.onclick=null;
-		document.body.onclick=function(){
+		document.body.onclick=function(){ //把事件处理程序绑定到body元素中
 			alert(this);//[object HTMLBodyElement]
 			alert(event.currentTarget);//[object HTMLBodyElement]
 			alert(event.target);//[object HTMLButtonElement]
 		}
 	}
-	/*当单击"取消上面按钮绑定的事件"这个按钮时，this和currentTarget 都等于document.body，因为事件处理程序是注册到这个元素上的。
+	/*event对象中 currentTarget与target的区别：  当单击"取消上面按钮绑定的事件"这个按钮时，this和currentTarget 都等于document.body，因为事件处理程序是注册到这个元素上的。
 	然而，target 元素却等于按钮元素，因为它是click 事件真正的目标(我们真正点击的是这个按钮)*/
 </script>
 
@@ -49,10 +51,10 @@
 			case "click":
 				alert("Clicked");
 				break;
-			case "mouseover":
+			case "mouseover":   //鼠标移入事件
 				event.target.style.backgroundColor="red";
 				break;
-			case "mouseout":
+			case "mouseout":   //鼠标移出事件
 				event.target.style.backgroundColor="blue";
 				break;
 		}
@@ -65,24 +67,25 @@
 <script type="text/javascript">
 	var divBtn = document.getElementById("divBtn");
 	divBtn.onclick=function(event){
-		event.stopPropagation();//由于该按钮在div中，点击该按钮后就会触发div的click事件；而这段代码可以终止事件冒泡传播，当点击该按钮此时绑定在div中的click事件便不会触发
+		//event.preventDefault();
+		event.stopPropagation();//由于该按钮在div中，点击该按钮后就会触发div的click事件；而这段代码可以终止事件冒泡传播，当点击该按钮此时绑定在div中的click事件便不会触发，不会弹出"clicked"
 	}
 </script>
 
 <script type="text/javascript">
  	//@ sourceURL=hxw.js
-	//事件对象有一个eventPhase 属性，可以用来确定事件当前正位于事件流的哪个阶段----1：捕获阶段(需要人为启用)。2：当前事件触发   3：冒泡传播阶段
+	//事件对象有一个eventPhase 属性，可以用来确定事件当前正位于事件流的哪个阶段----1：捕获阶段(需要人为启用,事件捕获可以看做向下冒泡)。2：当前事件绑定的目标元素触发   3：冒泡传播阶段
 	var scDiv = document.getElementById("scDiv");
 	scDiv.onclick=addEventListener("click",function(event){
-		alert(event.eventPhase);//1
-	},true);//为div在捕获阶段绑定点击事件
+		alert("捕获阶段处理程序"+event.eventPhase);//1
+	},true);//让scDiv在点击事件发生的捕获阶段触发该处理程序(这里加true了)
 	
 	scDiv.onclick=function(event){
-		alert(event.eventPhase);//3
-	}//为div在冒泡阶段绑定点击事件
+		alert(event.eventPhase);//3(点击scbtn按钮才会有这个结果，如果点击的是scDiv，则该结果为2)
+	}//让scDiv在点击事件发生的冒泡阶段触发该处理程序，这个事件传播的源头来自下面的事件绑定
 	
-	var btn = scDiv.childNodes[1];
-	btn.onclick=function(event){
+	var btn = document.getElementById("scbtn");
+	btn.onclick=function(event){ //这才是当前点击事件的目标元素
 		alert(event.eventPhase);//2
 	}
 	//事件执行顺序：1,2,3

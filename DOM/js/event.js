@@ -1,6 +1,6 @@
 //跨浏览器事件对象
 var EventUtil = {
-	addHandler: function(element, type, handler){
+	addHandler: function(element, type, handler){ //添加指定元素的特定事件类型的处理程序    参数1：要绑定事件的元素     参数2：要绑定的事件类型     参数3：事件处理程序      
 		if (element.addEventListener){
 			element.addEventListener(type, handler, false);
 		} else if (element.attachEvent){
@@ -10,7 +10,7 @@ var EventUtil = {
 		}
 	},
 	
-	removeHandler: function(element, type, handler){
+	removeHandler: function(element, type, handler){ //移除指定元素的特定事件类型的处理程序
 		if (element.removeEventListener){
 			element.removeEventListener(type, handler, false);
 		} else if (element.detachEvent){
@@ -20,15 +20,15 @@ var EventUtil = {
 		}
 	},
 	
-	getEvent: function(event){
+	getEvent: function(event){ //获取事件对象
 		return event ? event : window.event;
 	},
 	
-	getTarget: function(event){
+	getTarget: function(event){ //获取target
 		return event.target || event.srcElement;
 	},
 	
-	preventDefault: function(event){
+	preventDefault: function(event){ //取消事件默认行为(比如：点击a标签的跳转行为)
 		if (event.preventDefault){
 			event.preventDefault();
 		} else {
@@ -36,7 +36,7 @@ var EventUtil = {
 		}
 	},
 	
-	stopPropagation: function(event){
+	stopPropagation: function(event){ //终止事件传播
 		if (event.stopPropagation){
 			event.stopPropagation();
 		} else {

@@ -4,45 +4,73 @@
 		<meta charset="utf-8" />
 		<title></title>
 		<script type="text/javascript" src="js/table.js" ></script>
+		<script type="text/javascript" src="js/jquery-3.2.1.min.js" ></script>
 	</head>
 	<body>
-		<table class=" display " id="serviceListTable"  border="0" cellspacing="0">
-                <thead>
-                    <tr>
-                        <th value="2" width="20px"><div ><input name="" type="checkbox" value="" /></div></th>
-                        <th value="1"><div class="tx2">序号</div></th>
-                        <th value="3"><div class="tx5">业务区编号</div></th>
-                        <th value="4"><div class="tx5">业务区名称</div></th>
-                        <th value="5"><div class="tx5">业务区级别</div></th>
-                        <th value="6"><div class="tx4">所属大区</div></th>
-                        <th value="7"><div class="tx3">创建人</div></th>
-                        <th value="8"><div class="tx4">创建时间</div></th>
-                        <th value="9"><div class="tx3">审核人</div></th>
-                        <th value="10"><div class="tx4">审核时间</div></th>
-                        <th value="11"><div class="tx2">状态</div></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td class="x30"><div><input class="checked_basisRegionService" name="busAreaCode" type="checkbox" value="$!busArea.busAreaCode" /></div></td>
-                        <td class="x30"><div>1</div></td>
-                        <td><div>330110001</div></td><td>
-                        <div>兴华配件</div></td>
-                        <td><div>二级运营商</div></td>
-                        <td><div>浙江大区</div></td>
-                        <td><div>systemadmin</div></td>
-                        <td><div>2017-08-15 15:16:57</div></td>
-                        <td><div>蔡中华</div></td>
-                        <td><div>2017-08-15 15:16:57</div></td>
-                        <td><div>已启用</div></td>
-                    </tr>
-                </tbody>
-            </table> 
+		<div>
+			<p id="speak-light-style">
+				你好，java。
+			</p>
+		</div>
 	</body>
 </html>
 <script>
-	var table = document.getElementById("serviceListTable");
-	var propetyNames = ['id','num','busareaId','busareaName','busareaType','busarea','createPerson','gmtCreated','auditorPerson','gmtAuditor','status'];
-	var indexs = [7,9];
 	
+	createStyle();
+/**
+ * 在页面上写入高亮样式
+ */
+function createStyle() {
+    if (document.getElementById('speak-light-style')) return;
+    var style = document.createElement('style');
+    style.id = 'speak-light-style';
+    style.innerText = '.' + splitConfig.hightlightCls + '{' + splitConfig.hightStyle + '}';
+    document.getElementsByTagName('head')[0].appendChild(style);
+}
+
+// 非正文需要朗读的标签 逗号分隔
+var speakTags = 'a, p, span, h1, h2, h3, h4, h5, h6, img, input, button';
+$(document).on('mouseenter.speak-help', speakTags, function (e) {
+    var $target = $(e.target);
+    // 排除段落内的
+    if ($target.parents('.' + splitConfig.wrapCls).length || $target.find('.' + splitConfig.wrapCls).length) {
+        return;
+    }
+    // 图片样式单独处理 其他样式统一处理
+    if (e.target.nodeName.toLowerCase() === 'img') {
+        $target.css({
+            border: '2px solid #000'
+        });
+    } else {
+        $target.addClass(splitConfig.hightlightCls);
+    }
+    // 开始朗读
+    speakText(getText(e.target));
+}).on('mouseleave.speak-help', speakTags, function (e) {
+    var $target = $(e.target);
+    if ($target.find('.' + splitConfig.wrapCls).length) {
+        return;
+    }
+    // 图片样式
+    if (e.target.nodeName.toLowerCase() === 'img') {
+        $target.css({
+            border: 'none'
+        });
+    } else {
+        $target.removeClass(splitConfig.hightlightCls);
+    }
+    // 停止语音
+    stopSpeak();
+});
+
+// 段落内文本朗读
+$(document).on('mouseenter.speak-help', '.' + splitConfig.wrapCls, function (e) {
+    $(this).addClass(splitConfig.hightlightCls);
+    // 开始朗读
+    speakText(getText(this));
+}).on('mouseleave.speak-help', '.' + splitConfig.wrapCls, function (e) {
+    $(this).removeClass(splitConfig.hightlightCls);
+    // 停止语音
+    stopSpeak();
+});
 </script>

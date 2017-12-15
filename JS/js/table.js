@@ -1,10 +1,54 @@
 /**
- * 
- * @param {Object} propetyNames
+ * 正文内容分段处理
+ * @param {jQueryObject/HTMLElement/String}  $content 要处理的正文jQ对象或HTMLElement或其对应选择器
  */
-var TableToArray = function(propetyNames/*自定义属性名数组(属性的顺序要与表格的顺序一致)*/,table/*table元素*/,indexs/*指定要转成时间戳订单属性所在数组的索引(是个数组)*/){ //返回表格数组，且表格中的数据与
-	var table = {};//创建一个数组
-	propetyNames.forEach(function(a,b,c){
-		table[a];
-	});
+function splitConent($content) {
+    $content = $($content);
+    $content.find(splitConfig.unitTag).each(function (index, item) {
+        var $item = $(item),
+            text = $.trim($item.text());
+        if (!text) return;
+        var nodes = $item[0].childNodes;
+        $.each(nodes, function (i, node) {
+            switch (node.nodeType) {
+                case 3:
+                    // text 节点
+                    // 由于是文本节点，标签被转义了，后续再转回来
+                    node.data = '<' + splitConfig.wrapTag + '>' +
+                        node.data.replace(splitConfig.splitReg, '</' + splitConfig.wrapTag + '>$&<' + splitConfig.wrapTag + '>') +
+                        '</' + splitConfig.wrapTag + '>';
+                    break;
+                case 1:
+                    // 元素节点
+                    var innerHtml = node.innerHTML,
+                        start = '',
+                        end = '';
+                    // 如果内部还有直接标签，先去掉
+                    var startResult = /^<\w+?>/.exec(innerHtml);
+                    if (startResult) {
+                        start = startResult[0];
+                        innerHtml = innerHtml.substr(start.length);
+                    }
+                    var endResult = /<\/\w+?>$/.exec(innerHtml);
+                    if (endResult) {
+                        end = endResult[0];
+                        innerHtml = innerHtml.substring(0, endResult.index);
+                    }
+                    // 更新内部内容
+                    node.innerHTML = start +
+                        '<' + splitConfig.wrapTag + '>' +
+                        innerHtml.replace(splitConfig.splitReg, '</' + splitConfig.wrapTag + '>$&<' + splitConfig.wrapTag + '>') +
+                        '</' + splitConfig.wrapTag + '>' +
+                        end;
+                    break;
+                default:
+                    break;
+            }
+        });
+        // 处理文本节点中被转义的html标签
+        $item[0].innerHTML = $item[0].innerHTML
+            .replace(new RegExp('&lt;' + splitConfig.wrapTag + '&gt;', 'g'), '<' + splitConfig.wrapTag + '>')
+            .replace(new RegExp('&lt;/' + splitConfig.wrapTag + '&gt;', 'g'), '</' + splitConfig.wrapTag + '>');
+        $item.find(splitConfig.wrapTag).addClass(splitConfig.wrapCls);
+    });
 }
