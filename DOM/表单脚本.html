@@ -7,28 +7,25 @@
 	</head>
 	<body>
 		<form id="mF">
-			<input type="text" autofocus/>
+			<input type="text" autofocus/><!--这里autofocus是h5里，自动获取焦点 -->
 			<input type="checkbox"/>
 		</form>
 	</body>
 </html>
 <script type="text/javascript">
-	/*var form = document.getElementById('mF');
-	EventUtil.addHandler(form,"change",function(event){
-		alert("正在修改");
-	});*/
-	var textbox = document.forms[0].elements[0];//获取表单中第一个表单元素
-	textbox.value="胡小伟";
-	EventUtil.addHandler(textbox, "focus", function(event){
+	//@ sourceURL.js
+	var textbox = document.forms[0].elements[0];//获取第一个表单中第一个表单元素(即文本框)
+	textbox.value="你好JavaScript"; //设置文本框默认值
+	EventUtil.addHandler(textbox, "focus", function(event){ //当获取焦点，文本框颜色变为
 		event = EventUtil.getEvent(event);
 		var target = EventUtil.getTarget(event);
 		if (target.style.backgroundColor != "red"){
 			target.style.backgroundColor = "yellow";
 		}
-		textbox.select();//选择文本
+		textbox.select();//select()方法：用来选择文本框中的文本
 	});
 	
-	EventUtil.addHandler(textbox, "blur", function(event){
+	EventUtil.addHandler(textbox, "blur", function(event){ //blur：当文本框失去焦点时触发该程序
 		event = EventUtil.getEvent(event);
 		var target = EventUtil.getTarget(event);
 		if (/[^\d]/.test(target.value)){
@@ -36,9 +33,10 @@
 		} else {
 			target.style.backgroundColor = "";
 		}
-	});
+	});//当文本框失去焦点时，如果里面的值是数字，则文本框变红
 	
-	EventUtil.addHandler(textbox, "change", function(event){
+	EventUtil.addHandler(textbox, "change", function(event){ //change：当文本框失去焦点并且value值改变是触发该程序
+		alert("触发change事件");
 		event = EventUtil.getEvent(event);
 		var target = EventUtil.getTarget(event);
 		if (/[^\d]/.test(target.value)){
@@ -46,5 +44,6 @@
 		} else {
 			target.style.backgroundColor = "";
 		}
-	});
-</script>
+	});//当文本框失去焦点并且value值改变；而且值是非数字时文本框颜色变红，如果值不是数字就没有颜色
+</script><!--这个要放在下面，因为dom还没有加载-->
+
