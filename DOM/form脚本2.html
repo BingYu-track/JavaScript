@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<script type="text/javascript" src="js/event.js" ></script>
+		<title></title>
+	</head>
+	<body>
+		<form action="user/login.do" method="get">
+			<input type="text" value="我是胡小伟"/>
+			<input type="submit" value="提交"/>
+			<textarea rows="10" cols="5">你好</textarea>
+		</form>
+	</body>
+</html>
+<script type="text/javascript">
+	//# sourceURL=my.js
+	var form = document.forms[0];
+	//避免多次提交表单
+	EventUtil.addHandler(form, "submit", function(event){
+		event = EventUtil.getEvent(event);
+		var target = EventUtil.getTarget(event);//这个target为form表单，因为submit事件的真正目标是表单
+		console.log(target);
+		console.log(event.currentTarget);
+		//取得提交按钮
+		var btn = target.elements["submit-btn"];
+		//禁用它
+		btn.disabled = true;
+		
+	});
+	
+	EventUtil.addHandler(form.elements[0],"select",function(event){ //当选中input文本框里的文本并释放鼠标时触发该程序
+		event = EventUtil.getEvent(event);
+		var target = EventUtil.getTarget(event);
+		var text = getSelectedText(target); //该方法是获取用户选取的文本
+		alert("触发select事件:"+text);
+	});
+	function getSelectedText(textbox){
+		return textbox.value.substring(textbox.selectionStart,textbox.selectionEnd);
+	}
+</script>
