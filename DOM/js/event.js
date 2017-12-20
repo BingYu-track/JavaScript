@@ -1,4 +1,6 @@
-//跨浏览器事件对象
+/**
+ * 跨浏览器事件对象,需要传入三个参数    参数1：要绑定事件的元素     参数2：要绑定的事件类型     参数3：事件处理程序
+ */
 var EventUtil = {
 	addHandler: function(element, type, handler){ //添加指定元素的特定事件类型的处理程序    参数1：要绑定事件的元素     参数2：要绑定的事件类型     参数3：事件处理程序      
 		if (element.addEventListener){
@@ -41,6 +43,14 @@ var EventUtil = {
 			event.stopPropagation();
 		} else {
 			event.cancelBubble = true;
+		}
+	},
+	
+	getCharCode: function(event){
+		if(typeof event.charCode == "number"){
+			return event.charCode;
+		}else{
+			return event.keyCode;
 		}
 	}
 	
