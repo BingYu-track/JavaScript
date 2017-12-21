@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>选择框</title>
+	</head>
+	<body>
+		<form>
+			<select name="location" id="selLocation">
+				<option value="Sunnyvale, CA">Sunnyvale</option>
+				<option value="Los Angeles, CA">Los Angeles</option>
+				<option value="Mountain View, CA">Mountain View</option>
+				<option value="">China</option>
+				<option>Australia</option>
+			</select>
+		</form>
+		<button onclick="test();">遍历选择框选项</button>
+		<button id="selectIndex">获取选中项的option</button>
+		<button id="addOption">新增option</button>
+		<button id="removeOption">删除option</button>
+		<button id="moveOption">重排option</button>
+	</body>
+</html>
+<script type="text/javascript">
+	var select = document.forms[0].elements["location"]; //获取select控件
+	var options = select.options; //获取select控件下的option集合
+	function test(){
+		for (var i=0,len=options.length;i<len;i++) {
+			alert("选项文本:"+options[i].text);
+			alert("选项值:"+options[i].value);
+		}
+	}
+	//----------------------------------------------------------------------------
+	document.getElementById("selectIndex").onclick=function(event){
+		var selectedIndex = options.selectedIndex;//获取当前被选中的options的索引
+		alert(options[selectedIndex].text)
+	}
+	//----------------------------------------------------------------------------
+	//新增option
+	document.getElementById("addOption").onclick=function(event){
+		var option = new Option("胡小伟","hxw"); //创建一个新的option
+		select.add(option,undefined);//将新的option添加到第一个option之前
+	}
+	//----------------------------------------------------------------------------
+	//移除所有option
+	document.getElementById("removeOption").onclick=function(event){
+		clearSelectBox(select);
+	}
+	/*这里会执行5次，由于移除第一个选项后，所有后续选项都会自动向上移动一个位置，因此重复移除第一个选项就可以移除所有选项了
+	 * 这里不要在for循环第二个位置直接用selectBox.options.length，因为每移除一个，length都会减少
+	 */
+	function clearSelectBox(selectBox){
+		for (var i=0,len=selectBox.options.length;i<len;i++) { 
+			selectBox.remove(0);
+		}
+	}
+	
+	//options重排，将第一个option移动到中间   用到  insertBefore(a,b) 参数1：要移动的option1   参数2：要移动的位置(指定另外一个option2,option1将会移动到option2前面)
+	document.getElementById("moveOption").onclick=function(event){
+		var moveOption = options[0];
+		select.insertBefore(moveOption,options[3]);//移动到中间
+	}
+</script>
