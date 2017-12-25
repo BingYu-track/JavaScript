@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+		<script type="text/javascript" src="js/jquery-3.2.1.min.js" ></script>
+	</head>
+	<body>
+		<p id="p">你好！Jquery</p>
+		<button onclick="test();">按钮</button>
+	</body>
+</html>
+<script>
+	function test(){
+		var $p = $("#p");
+		//$p.html("你好程序员");
+		var p = $p.get(0); //jquery对象转为了dom对象
+		p.innerHTML="你好胡小伟";
+	}
+</script>
