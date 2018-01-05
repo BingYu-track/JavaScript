@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>富文本编辑</title>
+		<script type="text/javascript" src="js/event.js" ></script>
+	</head>
+	<body>
+		<!--<iframe name="richEdit" style="height: 100px;width: 100px;" src="表单过滤.html">
+			
+		</iframe>-->
+		<div class="editable" style="height: 500px;width: 600px;" id="richedit" contenteditable></div>
+	</body>
+</html>
+<script type="text/javascript">
+	EventUtil.addHandler(window, "load", function(){
+		frames["richedit"].document.designMode = "on";
+	});
+	
+	document.execCommand("bold",false,null);
+</script>
