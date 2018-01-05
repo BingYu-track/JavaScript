@@ -18,7 +18,6 @@
 </html>
 <script type="text/javascript">
 	//# sourceURL=my.js
-	var form = document.forms[0];
 	//避免多次提交表单
 	EventUtil.addHandler(form, "submit", function(event){
 		event = EventUtil.getEvent(event);
@@ -40,5 +39,4 @@
 	});
 	function getSelectedText(textbox){  //该方法是获取用户在textbox选取的文本
 		return textbox.value.substring(textbox.selectionStart,textbox.selectionEnd);
-	}
 </script>
