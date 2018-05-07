@@ -23,7 +23,7 @@
 	}
 	foo();
 	bar();
-	/*再调用bar函数时实际是调用的baz函数，而在baz函数中用到了它上一级作用域foo的变量a，此时foo的执行环境不会被垃圾回收器释放，此时foo就是"闭包"(Closure)
+	/*再调用bar函数时实际是调用的baz函数，而在baz函数中用到了它上一级作用域foo的变量a，此时foo的执行环境不会被垃圾回收器释放，此时baz就是"闭包"(Closure)
 	我们知道，函数的执行上下文，在执行完毕之后，生命周期结束，那么该函数的执行上下文就会失去引用。其占用的内存空间很快就会被垃圾回收器释放。可是闭包的存在，会阻止这一过程*/
 </script>
 
@@ -66,7 +66,7 @@
 	var bar = foo();  //此时bar = bar
 	var fn = bar(); //此时fn=fn()
 	fn();
-	/*foo为闭包，因为fn()实际调
+	/*fn为闭包，因为fn()实际调
 			function fn() {
 	            console.log(a);
 	        }      而该函数引用了它的上级函数作用域的变量a*/
@@ -86,7 +86,7 @@
 	}
 	var bar = foo();
 	var fn = bar();
-	fn();//此时bar和foo都为闭包，同上分析
+	fn();//此时bar和fn都为闭包，同上分析
 </script>
 
 <script type="text/javascript">
